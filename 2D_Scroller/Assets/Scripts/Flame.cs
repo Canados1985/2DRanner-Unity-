@@ -12,32 +12,49 @@ public class Flame : MonoBehaviour {
     private Transform playerTransform;
     private Transform spTransformInst;
 
+    public Animator animatorFlame;
+
     public int flameTouch = 0;
+
+
+
 
     void Start () {
 
         flameTransform.GetComponent<Transform>();
         playerTransform = GameObject.Find("Player").transform;
         spTransformInst = GameObject.Find("StartPoint_Trees").transform;
-
+        
 
         if (this.gameObject.name != "flame")
         {
+            animatorFlame = GetComponent<Animator>();
             go_Flame.name = "flame_clone";
             go_Flame.transform.position = new Vector3(flameTransform.position.x, -4.16f, flameTransform.position.z);
-
-        }
+            animatorFlame.SetBool("b_explsosion_Anim", true);
+         
+}
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player" && flameTouch == 0)
+        if(collision.gameObject.tag == "Player" && flameTouch == 0 && PlayerController.cl_PlaterController.b_IsDead == false)
         {
             flameTouch++;
+            FindObjectOfType<AudioManager>().Play("PlayerDamage");
+            PlayerController.cl_PlaterController.LoosingHealth();
+            PlayerController.cl_PlaterController.sr_player.color = Color.red;
+        }
+        if (collision.gameObject.tag == "Player" && flameTouch == 0 && PlayerController.cl_PlaterController.b_IsDead == false)
+        {
+            flameTouch++;
+            FindObjectOfType<AudioManager>().Play("PlayerDamage");
             PlayerController.cl_PlaterController.LoosingHealth();
             PlayerController.cl_PlaterController.sr_player.color = Color.red;
         }
     }
+
+
 
 
 
@@ -56,5 +73,6 @@ public class Flame : MonoBehaviour {
         {
             flameTouch = 0;
         }
+
     }
 }

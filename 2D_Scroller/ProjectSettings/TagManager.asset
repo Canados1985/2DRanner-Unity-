@@ -12,6 +12,7 @@ TagManager:
   - ENEMY FRONT
   - Heart
   - Meteorit
+  - Explosion
   layers:
   - Default
   - TransparentFX

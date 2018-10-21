@@ -21,7 +21,7 @@ public class SP_Heart : MonoBehaviour {
     void Start () {
 
         playerTransform = GameObject.Find("Player").transform;
-        SP_HeartTransform = GameObject.Find("StartPoint_Heart").transform;
+        //SP_HeartTransform = GameObject.Find("StartPoint_Heart").transform;
         heartInst = GameObject.Find("heart");
         daggerLootInst = GameObject.Find("daggerLoot");
 

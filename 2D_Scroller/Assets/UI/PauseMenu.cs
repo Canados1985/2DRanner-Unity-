@@ -22,7 +22,7 @@ public class PauseMenu : MonoBehaviour {
 	
 	void Update () {
 
-        if (Input.GetKeyDown(KeyCode.Escape) && startMenuInst.active == false)
+        if (Input.GetKeyDown(KeyCode.Escape) && startMenuInst.active == false && PlayerController.cl_PlaterController.b_IsDead == false)
         {
             if (GameIsPaused)
             {

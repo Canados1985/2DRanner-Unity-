@@ -17,12 +17,12 @@ public class Enemy_Front : MonoBehaviour {
     public Animator enemy_floatAnimator;
     public CircleCollider2D enemyCircleCollider;
     public BoxCollider2D enemyBoxCollider;
-    private float f_moveSpeed;
+    public float f_moveSpeed;
     public int enemyTouch = 0;
 
 
 
-    private bool b_Is_Dead = false;
+    public bool b_Is_Dead = false;
     bool b_voise = false;
 
 
@@ -62,7 +62,7 @@ public class Enemy_Front : MonoBehaviour {
         {
             enemyTouch++;
             PlayerController.cl_PlaterController.LoosingHealth();
-            Debug.Log("PLAYER LOSING HEALTH");
+            FindObjectOfType<AudioManager>().Play("PlayerDamage");
             PlayerController.cl_PlaterController.sr_player.color = Color.red;
             // this.gameObject.GetComponent<BoxCollider2D>().enabled = false;
             // this.gameObject.GetComponent<CircleCollider2D>().enabled = false;
@@ -78,7 +78,7 @@ public class Enemy_Front : MonoBehaviour {
             float f_random;
             f_random = Random.Range(100, 500);
             //enemy_Front_Transform.position = new Vector3 (PlayerController.cl_PlaterController.playerTransform.position.x + f_random, enemy_Front_Transform.position.y, enemy_Front_Transform.position.z);
-            Debug.Log("ENEMY IS DESTROYED");
+            
             enemy_floatAnimator.SetBool("Zombie_Is_Dead", true);
             FindObjectOfType<AudioManager>().Play("ZombieDead");
             if (f_random >= 400) { Instantiate(go_daggerInst, v3_enemyFront, new Quaternion(0, 0, 0, 0)); }
@@ -86,6 +86,21 @@ public class Enemy_Front : MonoBehaviour {
             //go_EnemyFront.SetActive(true);
             //enemy_Front_SR.flipX = true;
             //go_EnemyFront.transform.Translate(new Vector3(f_moveSpeed * Time.deltaTime, 0, 0));
+        }
+        if (col.gameObject.tag == "Explosion")
+        {
+            b_Is_Dead = true;
+            f_moveSpeed = 0;
+            enemyCircleCollider.enabled = false;
+            enemyBoxCollider.enabled = false;
+
+            float f_random;
+            f_random = Random.Range(100, 500);
+          
+            enemy_floatAnimator.SetBool("Zombie_Is_Dead", true);
+            FindObjectOfType<AudioManager>().Play("ZombieDead");
+            if (f_random >= 400) { Instantiate(go_daggerInst, v3_enemyFront, new Quaternion(0, 0, 0, 0)); }
+
         }
     }
 

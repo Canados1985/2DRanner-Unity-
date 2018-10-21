@@ -16,18 +16,23 @@ public class PlayerController : MonoBehaviour {
     public Text playerCoins;
     public Text playerKills;
     public Text playerDaggers;
-    public Text playerName;
     public Text highScore;
     public Text killScore;
     public Text coinScore;
-    public string s_playerName = "Andrey";
+    public Text PlayerNameUI_OLD;
+    public Text PlayerNameUI_NEW;
+    public Text PlayerNameIF_EXIST;
+
+    public InputField PlayerName_IF;
+    private string st_playerName;
+    private string st_playerNameEXIST;
+    
 
     public GameObject PauseMenuInst;
     public GameObject StartMenuInst;
+    public GameObject GameUIInst;
 
-    //public float f_runSpeed;
-    //public float f_runSpeed;
-    //public float f_jumpForce;
+
     public int i_Life;
     private int i_Points;
     private int i_Coins;
@@ -36,14 +41,10 @@ public class PlayerController : MonoBehaviour {
 
     private bool b_Jump = false;
     public bool b_IsDead;
-    
+    private bool b_soundJump = false;
     
     public Transform playerTransform;
-    public Transform sp_MainCamera_Transform;
-
-
     
-
     public Animator animator;
     public SpriteRenderer sr_player;
 
@@ -53,8 +54,11 @@ public class PlayerController : MonoBehaviour {
     private int i_spriteColloringCounter = 0; 
 	
 
+    
+
 	void Start () {
 
+        
         i_Life = 3;
         playerTransform = GetComponent<Transform>();
         animator = GetComponent<Animator>();
@@ -62,14 +66,29 @@ public class PlayerController : MonoBehaviour {
         cl_PlaterController = this;
         rb_Player = this.GetComponent<Rigidbody2D>();
         
-        sp_MainCamera_Transform = GameObject.Find("Enemy_front").transform;
-
         highScore.text = PlayerPrefs.GetInt("HighScore").ToString();
         killScore.text = PlayerPrefs.GetInt("HighKills").ToString();
         coinScore.text = PlayerPrefs.GetInt("HighCoins").ToString();
-        s_playerName = PlayerPrefs.GetString("PlayerName").ToString();
-    }
+        //PlayerNameUI_NEW.text = PlayerPrefs.GetString("").ToString();
+        PlayerNameUI_OLD.text = PlayerPrefs.GetString("PlayerName").ToString();
+        PlayerNameIF_EXIST.text = "FUCK";
 
+
+}
+
+     public void SetPlayerName()
+    {
+
+        PlayerNameUI_NEW.text = PlayerName_IF.text;
+        PlayerName_IF.text = st_playerNameEXIST;
+        st_playerName = PlayerNameUI_NEW.text;
+        
+        StartMenuInst.SetActive(false);
+       
+        Time.timeScale = 1f;
+
+    }
+    
 
 
 
@@ -100,23 +119,22 @@ public class PlayerController : MonoBehaviour {
 
     private void Update()
     {
-        Debug.Log("PLAYER'S NAME" + s_playerName);
+        Debug.Log(st_playerName);
 
         playerCoins.text = i_Coins.ToString();
         playerScore.text = i_Points.ToString();
         playerLife.text = i_Life.ToString();
         playerKills.text = i_Kills.ToString();
         playerDaggers.text = i_Daggers.ToString();
-        playerName.text = playerName.ToString();
+        
+        
 
 
         PlayerPrefs.SetInt("HighScore", i_Points);
         PlayerPrefs.SetInt("HighKills", i_Kills);
         PlayerPrefs.SetInt("HighCoins", i_Coins);
-        PlayerPrefs.SetString("PlayerName", s_playerName);
-
-        //Debug.Log(i_Coins);
-
+        PlayerPrefs.SetString("PlayerName", st_playerName);
+        
 
         // Check player Death
         if (i_Life <= 0)
@@ -125,17 +143,18 @@ public class PlayerController : MonoBehaviour {
             f_runSpeed = 0;
 
         }
-        //If Deadd
+        //If Dead
         if (b_IsDead)
         {
+
             animator.SetBool("IsDead", true);
             f_runSpeed = 0;
             f_horizontalMove = 0;
-
+            //PlayerNameUI_NEW.text = PlayerNameUI_OLD.text;
 
         }
 
-        if (sr_player.color == Color.red && i_spriteColloringCounter == 0)
+        if (sr_player.color == Color.red)
         {
             i_spriteColloringCounter++;
             if (i_spriteColloringCounter >= 50)
@@ -146,19 +165,21 @@ public class PlayerController : MonoBehaviour {
             
         }
 
-        if (!b_IsDead && PauseMenuInst.active == false && StartMenuInst.active == false)
+        if (!b_IsDead && PauseMenuInst.activeSelf == false && StartMenuInst.activeSelf == false)
         {
-            
-            
+            GameUIInst.SetActive(true); // Activation UI
+
             f_horizontalMove = Input.GetAxisRaw("Horizontal") * f_runSpeed;
             animator.SetFloat("PlayerSpeed", Mathf.Abs(f_horizontalMove));
 
 
             //Jumping
-            if (Input.GetButtonDown("Jump"))
+            if (Input.GetButtonDown("Jump") && b_soundJump == false)
             {
+                b_soundJump = true;
                 b_Jump = true;
                 animator.SetBool("IsJumping", true);
+                FindObjectOfType<AudioManager>().Play("Jump");
             }
 
 
@@ -175,14 +196,14 @@ public class PlayerController : MonoBehaviour {
             }
             
             //Sword Attack
-            if (Input.GetButton("Attack"))
+            /*   if (Input.GetButton("Attack"))
             {
                 animator.SetBool("IsAttacking", true);
             }
             else if (Input.GetButtonUp("Attack"))
             {
                 animator.SetBool("IsAttacking", false);
-            }
+            }*/
         }
         f_runSpeed = 40;
     }
@@ -199,7 +220,6 @@ public class PlayerController : MonoBehaviour {
         {
             // Moving player
             controller.Move(f_horizontalMove * Time.deltaTime, false, b_Jump);
-
             b_Jump = false;
             
         }
@@ -215,11 +235,38 @@ public class PlayerController : MonoBehaviour {
         {
             animator.SetBool("IsJumping", false);
             b_Jump = false;
+            b_soundJump = false;
             animator.SetBool("IsThrowing", false);
 
         }
         
     }
 
-    
+
+
+
+
+    //Phone Controller
+
+    public void Jump ()
+    {
+        if (!b_IsDead && PauseMenuInst.activeSelf == false && StartMenuInst.activeSelf == false)
+        {
+            b_Jump = true;
+            animator.SetBool("IsJumping", true);
+            FindObjectOfType<AudioManager>().Play("Jump");
+        }
+    }
+
+    public void MoveLeft()
+    {
+
+
+    }
+
+    public void MoveRight()
+    {
+
+
+    }
 }

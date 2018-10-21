@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour {
 
     public GameObject PauseMenuInst;
     public GameObject StartMenuInst;
+    public GameObject DeadMenuInst;
     public GameObject daggerInst; // Dagger Inst
     private Transform SP_DaggerInst; // Dagger SpawnPoint inst
     private List<GameObject> daggers; //Daggers Array
@@ -50,12 +51,6 @@ public class GameManager : MonoBehaviour {
         i_CloudSpawnCounter = 200;
      
         playerTransform = GameObject.Find("Player").transform;
-
-        if (daggerInst)
-        {
-            Debug.Log(daggerInst);
-        }
-        else { Debug.Log("No object name"); }
 
 
         SP_DaggerInst = GameObject.Find("StartPoint_Dagger").transform;
@@ -142,7 +137,7 @@ public class GameManager : MonoBehaviour {
 
                
         //Spawn Daggers facing right
-        if (Input.GetButtonDown("Throw") && CharacterController2DInst.m_FacingRight == true && PlayerController.cl_PlaterController.i_Daggers > 0 && PauseMenuInst.active == false && StartMenuInst.active == false)
+        if (Input.GetButtonDown("Throw") && CharacterController2DInst.m_FacingRight == true && PlayerController.cl_PlaterController.i_Daggers > 0 && PauseMenuInst.activeSelf == false && StartMenuInst.activeSelf == false && DeadMenuInst.activeSelf == false)
         {
             //Instantiate(daggerInst, v3_DaggerInst, new Quaternion(0, 0, 0, 0));
             GameObject temp = GetDagger();
@@ -154,7 +149,7 @@ public class GameManager : MonoBehaviour {
 
         }
         //Spawn Daggers facing left
-        if (Input.GetButtonDown("Throw") && CharacterController2DInst.m_FacingRight == false && PlayerController.cl_PlaterController.i_Daggers > 0 && PauseMenuInst.active == false && StartMenuInst.active == false)
+        if (Input.GetButtonDown("Throw") && CharacterController2DInst.m_FacingRight == false && PlayerController.cl_PlaterController.i_Daggers > 0 && PauseMenuInst.activeSelf == false && StartMenuInst.activeSelf == false && DeadMenuInst.activeSelf == false)
         {
             // Instantiate(daggerInst, v3_DaggerInst, new Quaternion(0, 90, 0, 0));
             GameObject temp = GetDagger();
@@ -165,6 +160,37 @@ public class GameManager : MonoBehaviour {
             PlayerController.cl_PlaterController.i_Daggers--;
         }
 
+
+    }
+
+    //Phone controller
+
+    public void ThrowDagger()
+    {
+
+        //Spawn Daggers facing right
+        if (CharacterController2DInst.m_FacingRight == true && PlayerController.cl_PlaterController.i_Daggers > 0 && PauseMenuInst.activeSelf == false && StartMenuInst.activeSelf == false && DeadMenuInst.activeSelf == false)
+        {
+            //Instantiate(daggerInst, v3_DaggerInst, new Quaternion(0, 0, 0, 0));
+            GameObject temp = GetDagger();
+            temp.GetComponent<Dagger>().f_moveSpeed = 30f;
+            temp.transform.position = SP_DaggerInst.position;
+            temp.transform.rotation = SP_DaggerInst.rotation;
+            //FindObjectOfType<AudioManager>().Play("ThrowKnife");
+            PlayerController.cl_PlaterController.i_Daggers--;
+
+        }
+        //Spawn Daggers facing left
+        if (CharacterController2DInst.m_FacingRight == false && PlayerController.cl_PlaterController.i_Daggers > 0 && PauseMenuInst.activeSelf == false && StartMenuInst.activeSelf == false && DeadMenuInst.activeSelf == false)
+        {
+            // Instantiate(daggerInst, v3_DaggerInst, new Quaternion(0, 90, 0, 0));
+            GameObject temp = GetDagger();
+            temp.GetComponent<Dagger>().f_moveSpeed = -30f;
+            temp.transform.position = SP_DaggerInst.position;
+            temp.transform.rotation = new Quaternion(0, 90, 0, 0);
+            //FindObjectOfType<AudioManager>().Play("ThrowKnife");
+            PlayerController.cl_PlaterController.i_Daggers--;
+        }
 
     }
 

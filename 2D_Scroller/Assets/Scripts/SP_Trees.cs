@@ -38,35 +38,34 @@ public class SP_Trees : MonoBehaviour {
     {
         float f_random;
        
-        f_random = Random.Range(0, 3);
+        f_random = Random.Range(1, 4);
 
 
-
-        if (f_random == 0 && PlayerController.cl_PlaterController.f_horizontalMove > 0)
-        {
-            Instantiate(go_Tree1, SP_Trees.cl_SP_Trees.v3_sp_Trees, new Quaternion(0, 0, 0, 0));
-            Random.seed = 100;
-            f_random = Random.Range(50, 500);
-            f_TreesSpawnCounter = f_random;
-        }
         if (f_random == 1 && PlayerController.cl_PlaterController.f_horizontalMove > 0)
         {
-            Instantiate(go_Tree2, SP_Trees.cl_SP_Trees.v3_sp_Trees, new Quaternion(0, 0, 0, 0));
+            Instantiate(go_Tree1, v3_sp_Trees, new Quaternion(0, 0, 0, 0));
             Random.seed = 100;
             f_random = Random.Range(50, 500);
             f_TreesSpawnCounter = f_random;
         }
         if (f_random == 2 && PlayerController.cl_PlaterController.f_horizontalMove > 0)
         {
-            Instantiate(go_Tree3, SP_Trees.cl_SP_Trees.v3_sp_Trees, new Quaternion(0, 0, 0, 0));
-         
+            Instantiate(go_Tree2, v3_sp_Trees, new Quaternion(0, 0, 0, 0));
             Random.seed = 100;
             f_random = Random.Range(50, 500);
             f_TreesSpawnCounter = f_random;
         }
         if (f_random == 3 && PlayerController.cl_PlaterController.f_horizontalMove > 0)
         {
-            Instantiate(go_Tree4, SP_Trees.cl_SP_Trees.v3_sp_Trees, new Quaternion(0, 0, 0, 0));
+            Instantiate(go_Tree3, v3_sp_Trees, new Quaternion(0, 0, 0, 0));
+         
+            Random.seed = 100;
+            f_random = Random.Range(50, 500);
+            f_TreesSpawnCounter = f_random;
+        }
+        if (f_random == 4 && PlayerController.cl_PlaterController.f_horizontalMove > 0)
+        {
+            Instantiate(go_Tree4, v3_sp_Trees, new Quaternion(0, 0, 0, 0));
             
             Random.seed = 100;
             f_random = Random.Range(50, 500);

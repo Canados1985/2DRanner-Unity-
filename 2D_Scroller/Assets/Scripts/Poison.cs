@@ -12,7 +12,9 @@ public class Poison : MonoBehaviour {
     private Transform playerTransform;
 
     private float f_movingSpeed = 2f;
-	
+
+    private float f_counter = 5000;
+
 	void Start () {
 
         playerTransform = GameObject.Find("Player").transform;
@@ -32,13 +34,22 @@ public class Poison : MonoBehaviour {
         {
             PlayerController.cl_PlaterController.b_IsDead = true;
             f_movingSpeed = 0f;
+            FindObjectOfType<AudioManager>().Play("PlayerDamage");
             PlayerController.cl_PlaterController.i_Life = 0;
             PlayerController.cl_PlaterController.sr_player.color = Color.red;
         }
     }
 
 
+    private void FixedUpdate()
+    {
+        f_counter--;
+
+    }
+
     void Update () {
+
+        //Debug.Log("POISON SPEED" + f_movingSpeed);
 
         if (PlayerController.cl_PlaterController.b_IsDead == false) {
 
@@ -47,15 +58,17 @@ public class Poison : MonoBehaviour {
             if (playerTransform.position.x - go_Poison.transform.position.x >= 20)
             {
                 go_Poison.transform.position = new Vector3(go_Poison.transform.position.x + 8.5f, 0, playerTransform.position.z);
-                //f_movingSpeed++;
+                
             }
 
         }
 
-
-
-
-
+        if (f_counter <= 0)
+        {
+            
+            f_movingSpeed++;
+            f_counter = 5000;
+        }
 
     }
 }

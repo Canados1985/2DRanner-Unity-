@@ -14,6 +14,7 @@ public class SP_Meteorit : MonoBehaviour {
     private Transform playerTransform;
     public GameObject meteoritInst;
     public GameObject PauseMenuInst;
+    public GameObject DeadMenuInst;
 
     private int i_counter;
 
@@ -45,7 +46,7 @@ public class SP_Meteorit : MonoBehaviour {
         i_counter--;
 
 
-        if (i_counter <= 0 && PlayerController.cl_PlaterController.f_horizontalMove > 0 && PauseMenuInst.active == false)
+        if (i_counter <= 0 && PlayerController.cl_PlaterController.f_horizontalMove > 0 && PauseMenuInst.activeSelf == false && DeadMenuInst.activeSelf == false)
         {
             float f_random;
             f_random = Random.Range(-2, 5);

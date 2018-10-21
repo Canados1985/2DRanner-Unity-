@@ -97,6 +97,7 @@
     <Compile Include="Assets\Scripts\Wave.cs" />
     <Compile Include="Assets\Scripts\Wave_f.cs" />
     <Compile Include="Assets\UI\DeadMenu.cs" />
+    <Compile Include="Assets\UI\GameUI.cs" />
     <Compile Include="Assets\UI\PauseMenu.cs" />
     <Compile Include="Assets\UI\StartMenu.cs" />
     <Reference Include="Unity.2D.SpriteShape.Editor">

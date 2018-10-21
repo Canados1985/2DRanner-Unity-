@@ -101,8 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   go_Dagger: {fileID: 1260026010596134}
   rb_Dagger: {fileID: 50749714720874068}
-  daggerTransform: {fileID: 0}
+  daggerTransform: {fileID: 4356869046878646}
   playerTransform: {fileID: 0}
+  f_moveSpeed: 30
 --- !u!212 &212070233453130088
 SpriteRenderer:
   m_ObjectHideFlags: 1

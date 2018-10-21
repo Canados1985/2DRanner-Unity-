@@ -36,13 +36,13 @@ public class MainCamera : MonoBehaviour {
         if (playerTransform.position.x - backGroundTransform.position.x >= -11 && backGroundTransform.position.x - backGroundTransform.position.x == 0 && PlayerController.cl_PlaterController.b_IsDead == false)
         {
             go_camera.transform.position = new Vector3(playerTransform.position.x, 0, transform.position.z);
-            go_Moon.transform.position = new Vector3(playerTransform.position.x + 8, moonTransfom.position.y, moonTransfom.position.z);
+            go_Moon.transform.position = new Vector3(playerTransform.position.x + 7, moonTransfom.position.y, moonTransfom.position.z);
         }
 
         if (playerTransform.position.x - backGroundTransform2.position.x >= -11 && PlayerController.cl_PlaterController.b_IsDead == false)
         {
              go_camera.transform.position = new Vector3(playerTransform.position.x, 0, transform.position.z);
-             go_Moon.transform.position = new Vector3(playerTransform.position.x + 8, moonTransfom.position.y, moonTransfom.position.z);
+             go_Moon.transform.position = new Vector3(playerTransform.position.x + 7, moonTransfom.position.y, moonTransfom.position.z);
         }
 
     }
